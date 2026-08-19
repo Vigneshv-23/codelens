@@ -214,7 +214,18 @@ function GraphFlow({ nodes: sourceNodes, edges: sourceEdges, graphSize, selected
     className: selectedId && node.id !== selectedId ? 'dimmed' : '',
     data: { ...node.data, isFocus: node.id === focusId },
   })), [focusId, preparedNodes, selectedId]);
-
+  const [draggedPositions, setDraggedPositions] = useState({});
+  const displayedNodes = useMemo(() => highlightedNodes.map((node) => ({
+    ...node,
+    position: draggedPositions[node.id] || node.position,
+  })), [draggedPositions, highlightedNodes]);
+  const handleNodesChange = useCallback((changes) => {
+    const positions = {};
+    changes.forEach((change) => {
+      if (change.type === 'position' && change.position) positions[change.id] = change.position;
+    });
+    if (Object.keys(positions).length > 0) setDraggedPositions((current) => ({ ...current, ...positions }));
+  }, []);
 
   useEffect(() => {
     if (fitRequest) requestAnimationFrame(() => fitView({ padding: 0.2, duration: 0 }));
@@ -231,10 +242,11 @@ function GraphFlow({ nodes: sourceNodes, edges: sourceEdges, graphSize, selected
 
   return (
     <ReactFlow
-      nodes={highlightedNodes}
+      nodes={displayedNodes}
       edges={preparedEdges}
       nodeTypes={nodeTypes}
       onInit={handleFlowInit}
+      onNodesChange={handleNodesChange}
       onNodeClick={handleNodeClick}
       onPaneClick={handlePaneClick}
       panOnDrag={[0, 1, 2]}
