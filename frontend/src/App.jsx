@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useNodesState, useState } from 'react';
 import {
   Background,
   Controls,
@@ -214,18 +214,11 @@ function GraphFlow({ nodes: sourceNodes, edges: sourceEdges, graphSize, selected
     className: selectedId && node.id !== selectedId ? 'dimmed' : '',
     data: { ...node.data, isFocus: node.id === focusId },
   })), [focusId, preparedNodes, selectedId]);
-  const [draggedPositions, setDraggedPositions] = useState({});
-  const displayedNodes = useMemo(() => highlightedNodes.map((node) => ({
-    ...node,
-    position: draggedPositions[node.id] || node.position,
-  })), [draggedPositions, highlightedNodes]);
-  const handleNodesChange = useCallback((changes) => {
-    const positions = {};
-    changes.forEach((change) => {
-      if (change.type === 'position' && change.position) positions[change.id] = change.position;
-    });
-    if (Object.keys(positions).length > 0) setDraggedPositions((current) => ({ ...current, ...positions }));
-  }, []);
+  const [displayedNodes, setDisplayedNodes, handleNodesChange] = useNodesState(highlightedNodes);
+
+  useEffect(() => {
+    setDisplayedNodes(highlightedNodes);
+  }, [highlightedNodes, setDisplayedNodes]);
 
   useEffect(() => {
     if (fitRequest) requestAnimationFrame(() => fitView({ padding: 0.2, duration: 0 }));
