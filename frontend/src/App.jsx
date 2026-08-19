@@ -237,6 +237,7 @@ function GraphFlow({ nodes: sourceNodes, edges: sourceEdges, graphSize, selected
       onInit={handleFlowInit}
       onNodeClick={handleNodeClick}
       onPaneClick={handlePaneClick}
+      panOnDrag
       minZoom={0.1}
       maxZoom={2}
       nodesFocusable
