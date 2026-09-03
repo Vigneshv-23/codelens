@@ -163,3 +163,12 @@ Never commit real credentials. If a key is exposed, revoke it and issue a replac
 ## Project status
 
 CodeLens is an actively developed prototype for repository exploration and grounded code explanations. The analyzer and relationship graph remain the source of truth; AI is used only as an explanation layer on top of analyzed code.
+
+## Images
+
+
+<img width="1365" height="653" alt="image" src="https://github.com/user-attachments/assets/8369457b-45d0-454f-be79-d8c6d6f6c89b" />
+<img width="324" height="478" alt="image" src="https://github.com/user-attachments/assets/72470e0c-a6f2-4716-a020-b41e60b141a2" />
+<img width="302" height="471" alt="image" src="https://github.com/user-attachments/assets/6ef7df38-4aa5-48f9-b44e-92c871ef3d00" />
+<img width="975" height="448" alt="image" src="https://github.com/user-attachments/assets/04bf4bea-8ac9-4097-be12-49cd16b00aeb" />
+
